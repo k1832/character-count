@@ -1,0 +1,108 @@
+<!-- Copyright (c) 2024 Keita Morisaki -->
+<!-- Mostly written by Google Gemini Advanced -->
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>字数カウント</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>字数カウント</h1>
+        <p>真ん中のテキストボックスに文章を貼り付けて、"字数を数える"ボタンを押すと、文字数や行数などがわかります。</p>
+        <div class="text-box">
+            <textarea id="text-area"></textarea>
+        </div>
+        <div class="buttons">
+            <button id="count-button">字数を数える</button>
+            <button id="reset-button">リセット</button>
+        </div>
+        <div class="results">
+            <p>■文字数(スペース込み)：</p>
+            <span id="char-count-with-spaces"></span>
+            <p>■文字数(スペース無視)：</p>
+            <span id="char-count-no-spaces"></span>
+            <p>■行数：</p>
+            <span id="line-count"></span>
+            <p>■段落数：</p>
+            <span id="paragraph-count"></span>
+            <p>■原稿用紙換算：</p>
+            <span id="page-count"></span>枚 <span id="line-count-on-page"></span>行
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            // 初期値
+            reset();
+            focusTextBox();
+
+            // "字数を数える"ボタンを押したときの処理
+            $("#count-button").click(function () {
+                focusTextBox();
+
+                // テキストボックスの文字数を取得する
+                var text = $("#text-area").val();
+                if (text == "") {
+                    reset();
+                    return;
+                }
+
+                var charCountWithSpaces = text.replace(/\n/g, "").length;
+                var charCountNoSpaces = text.replace(/\s/g, "").length;
+                var lineCount = text.split("\n").length;
+                var paragraphs = text.split(/\n{2,}/);
+                var paragraphCount = paragraphs.length;
+
+                // 原稿用紙換算
+                var lineCountForPage = 0;
+                var text = $("#text-area").val();
+                var lines = text.split("\n");
+
+                for (var i = 0; i < lines.length; i++) {
+                    var lineLength = lines[i].length;
+                    lineCountForPage += Math.ceil(lineLength / 20);
+                }
+
+                var pageCount = Math.floor(lineCountForPage / 20);
+                var lineCountOnLastPage = lineCountForPage % 20;
+
+                // 結果を表示する
+                $("#char-count-with-spaces").text(charCountWithSpaces);
+                $("#char-count-no-spaces").text(charCountNoSpaces);
+                $("#line-count").text(lineCount);
+                $("#paragraph-count").text(paragraphCount);
+                $("#page-count").text(pageCount);
+                $("#line-count-on-page").text(lineCountOnLastPage);
+            });
+
+            // "リセット"ボタンを押したときの処理
+            $("#reset-button").click(reset());
+
+        });
+
+        function reset() {
+            focusTextBox();
+
+            $("#text-area").val("");
+
+            // 結果をクリアする
+            $("#char-count-with-spaces").text(0);
+            $("#char-count-no-spaces").text(0);
+            $("#line-count").text(0);
+            $("#paragraph-count").text(0);
+            $("#page-count").text(0);
+            $("#line-count-on-page").text(0);
+        }
+
+        function focusTextBox() {
+            $("#text-area").focus();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+/* Copyright (c) 2024 Keita Morisaki */
+/* Mostly written by Google Gemini Advanced */
+body {
+    font-family: sans-serif;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  p {
+    margin-bottom: 10px;
+  }
+
+  .text-box {
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+  }
+
+  textarea {
+    width: 100%;
+    height: 100px;
+    resize: none;
+  }
+
+  .buttons {
+    text-align: center;
+  }
+
+  button {
+    margin: 10px;
+    padding: 10px;
+    background-color: #ccc;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+
+  .results {
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+  }
+
+  p.results p {
+    margin-bottom: 5px;
+  }
